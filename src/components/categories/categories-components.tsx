@@ -13,6 +13,7 @@ const Categories = () => {
 
   console.log({ categories })
 
+  // ESSA FUNÇAO SERA RESPONSAVEL POR EXIBIR AS CATEGORIAS...
   const fetchCategories = async () => {
     try {
       const { data } = await axios.get(`${env.apiUrl}/api/category`)
