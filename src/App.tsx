@@ -1,14 +1,18 @@
 import { FunctionComponent } from 'react'
-import Header from './components/header/header-components'
 
-interface AppProps {
-  message?: string
-}
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-const App: FunctionComponent<AppProps> = ({ message }) => {
+// PAGES
+import HomePage from './pages/home/home-page'
+
+const App: FunctionComponent = () => {
   return (
     <>
-      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
