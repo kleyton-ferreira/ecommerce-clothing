@@ -1,5 +1,5 @@
 // STYLES
-import './category-item.css'
+import './categories-item.css'
 
 // UTILITZ
 import { FunctionComponent } from 'react'
@@ -9,7 +9,7 @@ interface CategoryItemProps {
   selectionCategories: Category
 }
 
-const CategoryItem: FunctionComponent<CategoryItemProps> = ({
+const CategoriesItem: FunctionComponent<CategoryItemProps> = ({
   selectionCategories
 }) => {
   return (
@@ -25,4 +25,4 @@ const CategoryItem: FunctionComponent<CategoryItemProps> = ({
   )
 }
 
-export default CategoryItem
+export default CategoriesItem
