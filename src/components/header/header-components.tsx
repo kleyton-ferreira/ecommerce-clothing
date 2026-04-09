@@ -1,22 +1,30 @@
 // STYLES
-import './header-styles.css'
+import {
+  HeaderContainer,
+  HeaderItems,
+  HeaderItem,
+  HeaderItemText,
+  HeaderItemContainer,
+  HeaderTitle
+} from './header.styles'
 
+// BUTTON
 import { BsCart3 } from 'react-icons/bs'
 
 const Header = () => {
   return (
-    <div className='header-container'>
-      <h2 className='header-title'>CLUB CLOTHING</h2>
-      <div className='header-items'>
-        <div className='header-item'>Explorar</div>
-        <div className='header-item'>Login</div>
-        <div className='header-item'>Criar conta</div>
-        <div className='header-item'>
+    <HeaderContainer>
+      <HeaderTitle>CLUB CLOTHING</HeaderTitle>
+      <HeaderItems>
+        <HeaderItem>Explorar</HeaderItem>
+        <HeaderItem>Login</HeaderItem>
+        <HeaderItem>Criar conta</HeaderItem>
+        <HeaderItemContainer>
           <BsCart3 size={20} />
-          <p>5</p>
-        </div>
-      </div>
-    </div>
+          <HeaderItemText>5</HeaderItemText>
+        </HeaderItemContainer>
+      </HeaderItems>
+    </HeaderContainer>
   )
 }
 
