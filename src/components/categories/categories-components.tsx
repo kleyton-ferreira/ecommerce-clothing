@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-// STYLES
-import './categories-styles.css'
-
 // UTILITZ
 import Category from '../../types/categories.types'
 import env from '../../config/env.config'

@@ -1,5 +1,6 @@
 // STYLES
-import './categories-item.css'
+// import './categories-item.css'
+import { CategoryitemContainer, CategoryName } from './categories-item.styles'
 
 // UTILITZ
 import { FunctionComponent } from 'react'
@@ -13,15 +14,12 @@ const CategoriesItem: FunctionComponent<CategoryItemProps> = ({
   selectionCategories
 }) => {
   return (
-    <div
-      className='category-item-container'
-      style={{ backgroundImage: selectionCategories.imageUrl }}
-    >
-      <div className='category-name'>
-        <p> {selectionCategories.displayName} </p>
+    <CategoryitemContainer backgroundImage={selectionCategories.imageUrl}>
+      <CategoryName>
+        <p>{selectionCategories.displayName} </p>
         <p>Explorar</p>
-      </div>
-    </div>
+      </CategoryName>
+    </CategoryitemContainer>
   )
 }
 
