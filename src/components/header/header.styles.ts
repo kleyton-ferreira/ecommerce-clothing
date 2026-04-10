@@ -32,7 +32,7 @@ export const HeaderItem = styled.div`
   }
 `
 
-export const HeaderItemContainer = styled.p`
+export const HeaderItemContainer = styled.div`
  display: flex;
  gap: 3px;
  cursor: pointer;
