@@ -20,6 +20,7 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.style'
+import InputLabel from '../../components/input-label/input-label-components'
 
 interface LoginPageForm {
   password: string
@@ -51,7 +52,7 @@ const LoginPage = () => {
           <LoginSubtitle>ou entre com o seu e-mail</LoginSubtitle>
 
           <LoginInputContainer>
-            <p>E-mail</p>
+            <InputLabel label='E-mail' />
             <CustomInput
               type='email'
               hasError={!!errors?.email}
@@ -74,7 +75,7 @@ const LoginPage = () => {
           </LoginInputContainer>
 
           <LoginInputContainer>
-            <p>Senha</p>
+            <InputLabel label='Senha' />
             <CustomInput
               type='password'
               hasError={!!errors?.password}
