@@ -24,13 +24,17 @@ const Header = () => {
     navigate('/login')
   }
 
+  const handleSignupClick = () => {
+    navigate('/signup')
+  }
+
   return (
     <HeaderContainer>
       <HeaderTitle onClick={handleMainClick}>CLUB CLOTHING</HeaderTitle>
       <HeaderItems>
         <HeaderItem onClick={handleMainClick}>Explorar</HeaderItem>
         <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
-        <HeaderItem>Criar conta</HeaderItem>
+        <HeaderItem onClick={handleSignupClick}>Criar conta</HeaderItem>
         <HeaderItemContainer>
           <BsCart3 size={20} />
           <HeaderItemText>5</HeaderItemText>

@@ -83,7 +83,7 @@ const LoginPage = () => {
               {...register('password', { required: true })}
             />
             {errors?.password?.type === 'required' && (
-              <InputErrorMessage> O senha e obrigatória </InputErrorMessage>
+              <InputErrorMessage> O senha e obrigatória. </InputErrorMessage>
             )}
           </LoginInputContainer>
 
