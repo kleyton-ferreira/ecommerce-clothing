@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+export const CategoriesContainerMax = styled.div`
+ width: 1830px;
+ height: 860px;
+ margin: 0 auto;
+`
+
 export const CategoriesContainer = styled.div`
   height: 100%;
   width: 100%;

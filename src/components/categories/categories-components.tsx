@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 
 // STYLES
-import { CategoriesContainer, CategoriesContent } from './categories-styles'
+import {
+  CategoriesContainer,
+  CategoriesContent,
+  CategoriesContainerMax
+} from './categories-styles'
 
 // COMPONENTS
 import CategoriesItem from '../category-item/categories-item-components'
@@ -25,6 +29,7 @@ const Categories = () => {
       querySnapshot.forEach((doc: any) => {
         categoriesFromFirestore.push(doc.data())
       })
+      console.log({ categoriesFromFirestore })
       setCategories(categoriesFromFirestore)
     } catch (error) {
       console.log(error)
@@ -36,15 +41,17 @@ const Categories = () => {
   }, [])
 
   return (
-    <CategoriesContainer>
-      <CategoriesContent>
-        {categories.map((categoryInfo) => (
-          <div key={categoryInfo.id}>
-            <CategoriesItem selectionCategories={categoryInfo} />
-          </div>
-        ))}
-      </CategoriesContent>
-    </CategoriesContainer>
+    <CategoriesContainerMax>
+      <CategoriesContainer>
+        <CategoriesContent>
+          {categories.map((categoryInfo) => (
+            <div key={categoryInfo.id}>
+              <CategoriesItem selectionCategories={categoryInfo} />
+            </div>
+          ))}
+        </CategoriesContent>
+      </CategoriesContainer>
+    </CategoriesContainerMax>
   )
 }
 
