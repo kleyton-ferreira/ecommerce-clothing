@@ -1,4 +1,7 @@
 import { useForm } from 'react-hook-form'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { addDoc, collection } from 'firebase/firestore'
+import validator from 'validator'
 
 // STYLES
 import {
@@ -8,17 +11,19 @@ import {
   SignUpInputContainer
 } from './sign-up-style'
 
+// BUTTONS
+import { FiLogIn } from 'react-icons/fi'
+
 // COMPONENTS
 import Header from '../../components/header/header-components'
 import CustomInput from '../../components/custom-input/custom-input.components'
 import InputLabel from '../../components/input-label/input-label-components'
 import CustomButton from '../../components/custom-button/custom-button.components'
-import { FiLogIn } from 'react-icons/fi'
 import InputErrorMessage from '../../components/input-error-message/input-error-message'
-import validator from 'validator'
+import { auth, db } from '../../config/firebase.config'
 
 interface SignupForm {
-  name: string
+  Firstname: string
   lastName: string
   email: string
   password: string
@@ -35,8 +40,25 @@ const SignUpPage = () => {
 
   const watchPassword = watch('password')
 
-  const handleSignupClick = (data: any) => {
-    console.log({ data })
+  const handleSignupClick = async (data: SignupForm) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        email: userCredentials.user.email,
+        firstName: data.Firstname,
+        lastName: data.lastName
+      })
+
+      console.log({ userCredentials })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   console.log({ errors })
@@ -52,13 +74,13 @@ const SignUpPage = () => {
             <InputLabel label='Nome' />
             <CustomInput
               type='text'
-              hasError={!!errors?.name}
+              hasError={!!errors?.Firstname}
               placeholder='Digite seu nome'
-              {...register('name', {
+              {...register('Firstname', {
                 required: true
               })}
             />
-            {errors?.name?.type === 'required' && (
+            {errors?.Firstname?.type === 'required' && (
               <InputErrorMessage>O nome e obrigatório.</InputErrorMessage>
             )}
           </SignUpInputContainer>
