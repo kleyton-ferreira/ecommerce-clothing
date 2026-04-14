@@ -2,29 +2,59 @@ import styled from "styled-components"
 import Colors from "../../theme/theme.colors"
 
 interface CategoryItemContainerProps {
-    backgroundImage: string
+  backgroundImage: string
 }
 
-
 export const CategoryitemContainer = styled.div<CategoryItemContainerProps>`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
   grid-gap: 15px;
+  border-radius: 10px;
+  background: black ;
+  overflow: hidden;
+ 
+  &::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-blend-mode: color;
+  background: ${(props) => `url("${props.backgroundImage}")`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 10px;
-  /* DESSA FORMA AQUI A IMAGEM FICA UM POUCO ESCURA */
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   background-color: rgba(0, 0, 0, 0.3);
-  background-blend-mode: color;
-  background: ${(props) => `url("${props.backgroundImage}")`};
+  transition: all 0.3s ease;
+  }
+
+   &:hover::before {
+    transform: scale(1.02) ;
+   }
+  
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black ;
+    border-radius: 10px;
+    opacity: 0;
+    transition: all 0.3s ease; 
+  }
+
+   &:hover::after {
+    opacity: 0.3;
+   }
 `
 
 export const CategoryName = styled.div`
+  position: relative;
+  z-index: 2 ;
   color: ${Colors.text.whithe};
   text-align: center;
   background: rgba(233, 236, 239, 0.45);
