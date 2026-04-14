@@ -1,6 +1,11 @@
 import { useForm } from 'react-hook-form'
-
 import validator from 'validator'
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword
+} from 'firebase/auth'
+import { auth, db } from '../../config/firebase.config'
 
 // ICONS
 import { BsGoogle } from 'react-icons/bs'
@@ -11,6 +16,7 @@ import Header from '../../components/header/header-components'
 import CustomButton from '../../components/custom-button/custom-button.components'
 import CustomInput from '../../components/custom-input/custom-input.components'
 import InputErrorMessage from '../../components/input-error-message/input-error-message'
+import InputLabel from '../../components/input-label/input-label-components'
 
 // STYLES
 import {
@@ -20,7 +26,7 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.style'
-import InputLabel from '../../components/input-label/input-label-components'
+import { addDoc, collection } from 'firebase/firestore'
 
 interface LoginPageForm {
   password: string
@@ -31,11 +37,26 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setError
   } = useForm<LoginPageForm>()
 
-  const handleSubmitPress = (data: any) => {
-    console.log({ data })
+  const handleSubmitPress = async (data: LoginPageForm) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+      console.log({ userCredential })
+    } catch (error) {
+      const _error = error as AuthError
+      if (_error.code === 'auth/invalid-login-credentials') {
+        setError('password', {
+          type: 'manual'
+        })
+      }
+    }
   }
 
   console.log({ errors })
@@ -84,6 +105,10 @@ const LoginPage = () => {
             />
             {errors?.password?.type === 'required' && (
               <InputErrorMessage> O senha e obrigatória. </InputErrorMessage>
+            )}
+
+            {errors?.password?.type === 'manual' && (
+              <InputErrorMessage> Senha ou email inválido. </InputErrorMessage>
             )}
           </LoginInputContainer>
 
