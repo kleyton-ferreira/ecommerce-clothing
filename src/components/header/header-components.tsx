@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../config/firebase.config'
 
 // STYLES
 import {
@@ -16,7 +18,7 @@ import { BsCart3 } from 'react-icons/bs'
 const Header = () => {
   const navigate = useNavigate()
 
-  const handleMainClick = () => {
+  const handleInitialPage = () => {
     navigate('/')
   }
 
@@ -30,11 +32,12 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <HeaderTitle onClick={handleMainClick}>CLUB CLOTHING</HeaderTitle>
+      <HeaderTitle onClick={handleInitialPage}>CLUB CLOTHING</HeaderTitle>
       <HeaderItems>
-        <HeaderItem onClick={handleMainClick}>Explorar</HeaderItem>
+        <HeaderItem>Explorar</HeaderItem>
         <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
         <HeaderItem onClick={handleSignupClick}>Criar conta</HeaderItem>
+        <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
         <HeaderItemContainer>
           <BsCart3 size={20} />
           <HeaderItemText>5</HeaderItemText>
