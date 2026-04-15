@@ -2,10 +2,11 @@ import { useForm } from 'react-hook-form'
 import validator from 'validator'
 import {
   AuthError,
-  AuthErrorCodes,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signInWithPopup
 } from 'firebase/auth'
-import { auth, db } from '../../config/firebase.config'
+import { auth, db, provider } from '../../config/firebase.config'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 // ICONS
 import { BsGoogle } from 'react-icons/bs'
@@ -26,7 +27,6 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.style'
-import { addDoc, collection } from 'firebase/firestore'
 
 interface LoginPageForm {
   password: string
@@ -40,6 +40,36 @@ const LoginPage = () => {
     formState: { errors },
     setError
   } = useForm<LoginPageForm>()
+
+  const handleSignInWithGooglePress = async () => {
+    try {
+      const userCredentials = await signInWithPopup(auth, provider)
+      console.log({ userCredentials })
+
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, 'users'),
+          where('id', '==', userCredentials.user.uid)
+        )
+      )
+
+      const user = querySnapshot.docs[0]?.data()
+      if (!user) {
+        const firstName = userCredentials.user.displayName?.split(' ')[0]
+        const lastName = userCredentials.user.displayName?.split(' ')[1]
+
+        await addDoc(collection(db, 'users'), {
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+          firstName,
+          lastName,
+          providers: 'google'
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleSubmitPress = async (data: LoginPageForm) => {
     try {
@@ -67,7 +97,10 @@ const LoginPage = () => {
       <LoginContainer>
         <LoginContent>
           <LoginHeadLine>Entre com a sua conta</LoginHeadLine>
-          <CustomButton startIcon={<BsGoogle size={18} />}>
+          <CustomButton
+            startIcon={<BsGoogle size={18} />}
+            onClick={handleSignInWithGooglePress}
+          >
             Entrar com o Google
           </CustomButton>
           <LoginSubtitle>ou entre com o seu e-mail</LoginSubtitle>

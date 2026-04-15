@@ -57,7 +57,8 @@ const SignUpPage = () => {
         id: userCredentials.user.uid,
         email: userCredentials.user.email,
         firstName: data.Firstname,
-        lastName: data.lastName
+        lastName: data.lastName,
+        providers: 'firebase'
       })
 
       console.log({ userCredentials })
