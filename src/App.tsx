@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from 'react'
+import { FunctionComponent, useContext, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { auth, db } from './config/firebase.config'
@@ -11,6 +11,7 @@ import LoginPage from './pages/login/login.page'
 import SignUpPage from './pages/sign-up/sign-up-page'
 
 const App: FunctionComponent = () => {
+  const [isInitialing, setIsInitialing] = useState(true)
   const { isAuthenticated, loginUser, logoutUser } = useContext(UserContext)
   console.log({ isAuthenticated })
 
@@ -19,7 +20,8 @@ const App: FunctionComponent = () => {
     // FUNÇAO DE SAIR ( FALSE )
     const isSigninOut = isAuthenticated && !user
     if (isSigninOut) {
-      return logoutUser()
+      logoutUser()
+      return setIsInitialing(false)
     }
 
     // FUNÇAO DE FAZER O LOGIN ( TRUE )
@@ -31,7 +33,10 @@ const App: FunctionComponent = () => {
       const userFromFirestore = querySnapshot.docs[0]?.data()
       return loginUser(userFromFirestore as any)
     }
+    return setIsInitialing(false)
   })
+
+  if (isInitialing) return null
 
   return (
     <>
