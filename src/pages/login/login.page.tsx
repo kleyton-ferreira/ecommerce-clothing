@@ -7,6 +7,9 @@ import {
 } from 'firebase/auth'
 import { auth, db, provider } from '../../config/firebase.config'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import { useContext, useEffect } from 'react'
+import { UserContext } from '../../context/user-context'
+import { useNavigate } from 'react-router-dom'
 
 // ICONS
 import { BsGoogle } from 'react-icons/bs'
@@ -41,6 +44,38 @@ const LoginPage = () => {
     setError
   } = useForm<LoginPageForm>()
 
+  const { isAuthenticated } = useContext(UserContext)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated])
+
+  // AQUI E PRA FAZER LOGIN COM A CONTA NORMAL
+  const handleSubmitPress = async (data: LoginPageForm) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+      console.log({ userCredential })
+    } catch (error) {
+      const _error = error as AuthError
+      if (_error.code === 'auth/invalid-login-credentials') {
+        setError('password', {
+          type: 'manual'
+        })
+      }
+    }
+  }
+
+  console.log({ errors })
+
+  // AQUI E PRA FAZER O LOGIN COM O GOOGLE
   const handleSignInWithGooglePress = async () => {
     try {
       const userCredentials = await signInWithPopup(auth, provider)
@@ -70,26 +105,6 @@ const LoginPage = () => {
       console.log(error)
     }
   }
-
-  const handleSubmitPress = async (data: LoginPageForm) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      )
-      console.log({ userCredential })
-    } catch (error) {
-      const _error = error as AuthError
-      if (_error.code === 'auth/invalid-login-credentials') {
-        setError('password', {
-          type: 'manual'
-        })
-      }
-    }
-  }
-
-  console.log({ errors })
 
   return (
     <>
