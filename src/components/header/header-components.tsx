@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../config/firebase.config'
+import { UserContext } from '../../context/user-context'
 
 // STYLES
 import {
@@ -14,9 +15,12 @@ import {
 
 // BUTTON
 import { BsCart3 } from 'react-icons/bs'
+import { useContext } from 'react'
 
 const Header = () => {
   const navigate = useNavigate()
+
+  const { isAuthenticated } = useContext(UserContext)
 
   const handleInitialPage = () => {
     navigate('/')
@@ -35,9 +39,17 @@ const Header = () => {
       <HeaderTitle onClick={handleInitialPage}>CLUB CLOTHING</HeaderTitle>
       <HeaderItems>
         <HeaderItem>Explorar</HeaderItem>
-        <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
-        <HeaderItem onClick={handleSignupClick}>Criar conta</HeaderItem>
-        <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
+        {!isAuthenticated && (
+          <>
+            <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
+            <HeaderItem onClick={handleSignupClick}>Criar conta</HeaderItem>
+          </>
+        )}
+
+        {isAuthenticated && (
+          <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
+        )}
+
         <HeaderItemContainer>
           <BsCart3 size={20} />
           <HeaderItemText>5</HeaderItemText>
