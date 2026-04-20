@@ -16,7 +16,7 @@ export const UserContext = createContext<IUserContext>({
 })
 
 interface ContextProviderComponents {
-  children: string | any
+  children: React.ReactNode | string
 }
 
 const UserContextProvider: FunctionComponent<ContextProviderComponents> = ({
