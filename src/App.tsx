@@ -10,6 +10,7 @@ import { userConverter } from './converters/firestore.converts'
 import HomePage from './pages/home/home-page'
 import LoginPage from './pages/login/login.page'
 import SignUpPage from './pages/sign-up/sign-up-page'
+import Loading from './components/loading/loading-components'
 
 const App: FunctionComponent = () => {
   const [isInitialing, setIsInitialing] = useState(true)
@@ -27,6 +28,7 @@ const App: FunctionComponent = () => {
 
     // FUNÇAO DE FAZER O LOGIN ( TRUE )
     const isSigninIn = !isAuthenticated && user
+
     if (isSigninIn) {
       const querySnapshot = await getDocs(
         query(
@@ -41,7 +43,7 @@ const App: FunctionComponent = () => {
     return setIsInitialing(false)
   })
 
-  if (isInitialing) return null
+  if (isInitialing) return <Loading />
 
   return (
     <>
