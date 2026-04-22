@@ -22,7 +22,10 @@ const CategoriesOverview: FunctionComponent = () => {
     <>
       <Container>
         {categories.map((categoryItems) => (
-          <CategoryProducts key={categoryItems.id} products={categoryItems} />
+          <CategoryProducts
+            key={categoryItems.id}
+            productsItems={categoryItems}
+          />
         ))}
       </Container>
     </>

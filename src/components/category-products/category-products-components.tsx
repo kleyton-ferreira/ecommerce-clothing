@@ -1,7 +1,11 @@
 import { FunctionComponent } from 'react'
 
+// COMPONENTS
+import ProductsItem from '../products-item/products-item-components'
+
 // STYLES
 import {
+  CategoriesContainerMax,
   CategoryContainer,
   CategoryTitle,
   ProductsContainer
@@ -11,17 +15,24 @@ import {
 import Category from '../../types/categories.types'
 
 interface CategoryProductsProps {
-  products: Category
+  productsItems: Category
 }
 
 const CategoryProducts: FunctionComponent<CategoryProductsProps> = ({
-  products
+  productsItems
 }) => {
   return (
     <>
-      <CategoryContainer>
-        <CategoryTitle> {products.displayName} </CategoryTitle>
-      </CategoryContainer>
+      <CategoriesContainerMax>
+        <CategoryContainer>
+          <CategoryTitle> {productsItems.displayName} </CategoryTitle>
+          <ProductsContainer>
+            {productsItems.products.slice(0, 4).map((prod) => (
+              <ProductsItem key={prod.id} items={prod} />
+            ))}
+          </ProductsContainer>
+        </CategoryContainer>
+      </CategoriesContainerMax>
     </>
   )
 }

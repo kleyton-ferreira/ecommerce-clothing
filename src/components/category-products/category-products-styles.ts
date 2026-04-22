@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+export const CategoriesContainerMax = styled.div`
+ width: 1830px;
+ margin: 0 auto;
+`
+
 export const CategoryContainer = styled.div`
   display: flex;
   flex-direction: column;
