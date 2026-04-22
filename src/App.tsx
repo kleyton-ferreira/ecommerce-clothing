@@ -11,6 +11,7 @@ import HomePage from './pages/home/home-page'
 import LoginPage from './pages/login/login.page'
 import SignUpPage from './pages/sign-up/sign-up-page'
 import Loading from './components/loading/loading-components'
+import ExplorePage from './pages/explore /explore-page'
 
 const App: FunctionComponent = () => {
   const [isInitialing, setIsInitialing] = useState(true)
@@ -52,6 +53,7 @@ const App: FunctionComponent = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignUpPage />} />
+          <Route path='/explore' element={<ExplorePage />} />
         </Routes>
       </BrowserRouter>
     </>
