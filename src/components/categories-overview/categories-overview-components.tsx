@@ -1,5 +1,8 @@
 import { FunctionComponent, useContext, useEffect } from 'react'
 
+// COMPONSNTS
+import CategoryProducts from '../category-products/category-products-components'
+
 // STYLES
 import { Container } from './categories-overview-styles'
 
@@ -19,7 +22,7 @@ const CategoriesOverview: FunctionComponent = () => {
     <>
       <Container>
         {categories.map((categoryItems) => (
-          <p key={categoryItems.id}> {categoryItems.displayName} </p>
+          <CategoryProducts key={categoryItems.id} products={categoryItems} />
         ))}
       </Container>
     </>
