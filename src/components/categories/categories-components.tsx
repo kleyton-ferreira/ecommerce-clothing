@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 
 // STYLES
 import {
@@ -9,35 +9,15 @@ import {
 
 // COMPONENTS
 import CategoriesItem from '../category-item/categories-item-components'
+import Loading from '../loading/loading-components'
 
 // UTILITZ
-import Category from '../../types/categories.types'
-
-import { getDocs, collection } from 'firebase/firestore'
-import { db } from '../../config/firebase.config'
-import { categoryConverter } from '../../converters/firestore.converts'
+import { CategoryContext } from '../../context/category-context'
 
 const Categories = () => {
-  const [categories, setCategories] = useState<Category[]>([])
+  const { categories, fetchCategories, isLoading } = useContext(CategoryContext)
 
   console.log({ categories })
-
-  // ESSA FUNÇAO SERA RESPONSAVEL POR EXIBIR AS CATEGORIAS...
-  const fetchCategories = async () => {
-    try {
-      const categoriesFromFirestore: Category[] = []
-      const querySnapshot = await getDocs(
-        collection(db, 'categories').withConverter(categoryConverter)
-      )
-      querySnapshot.forEach((doc) => {
-        categoriesFromFirestore.push(doc.data())
-      })
-      console.log({ categoriesFromFirestore })
-      setCategories(categoriesFromFirestore)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   useEffect(() => {
     fetchCategories()
@@ -46,6 +26,7 @@ const Categories = () => {
   return (
     <CategoriesContainerMax>
       <CategoriesContainer>
+        {isLoading && <Loading />}
         <CategoriesContent>
           {categories.map((categoryInfo) => (
             <div key={categoryInfo.id}>

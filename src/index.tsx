@@ -6,12 +6,15 @@ import reportWebVitals from './reportWebVitals'
 
 // CONTEXT
 import UserContextProvider from './context/user-context'
+import CategoryContextProvider from './context/category-context'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <UserContextProvider>
-      <App />
+      <CategoryContextProvider>
+        <App />
+      </CategoryContextProvider>
     </UserContextProvider>
   </React.StrictMode>
 )
