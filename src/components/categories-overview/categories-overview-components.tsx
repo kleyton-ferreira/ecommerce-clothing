@@ -2,6 +2,7 @@ import { FunctionComponent, useContext, useEffect } from 'react'
 
 // COMPONSNTS
 import CategoryProducts from '../category-products/category-products-components'
+import Loading from '../loading/loading-components'
 
 // STYLES
 import { Container } from './categories-overview-styles'
@@ -10,13 +11,15 @@ import { Container } from './categories-overview-styles'
 import { CategoryContext } from '../../context/category-context'
 
 const CategoriesOverview: FunctionComponent = () => {
-  const { categories, fetchCategories } = useContext(CategoryContext)
+  const { categories, fetchCategories, isLoading } = useContext(CategoryContext)
 
   useEffect(() => {
     if (fetchCategories.length === 0) {
       fetchCategories()
     }
   }, [])
+
+  if (isLoading) return <Loading />
 
   return (
     <>
