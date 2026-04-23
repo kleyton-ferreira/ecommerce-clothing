@@ -3,7 +3,8 @@ const Colors = {
     text: {
         whithe: "#F8F9FA",
         dark: "#343A40",
-        hover: "#788992"
+        hover: "#788992",
+        maroon: "#800000"
     },
     backgound: {
         dark: "#212529",
