@@ -5,13 +5,19 @@ export const Container = styled.div`
   padding: 0px 40px 20px 40px;
 `
 
+export const CategoriesContainerMax = styled.div`
+ width: 1830px;
+ height: 860px;
+ margin: 0 auto;
+`
+
 export const CategoryTitle = styled.div`
   display: flex;
   align-items: center;
   margin-top: 20px;
   cursor: pointer;
-  position: relative;
-  z-index: 2;
+
+  margin-bottom: 26px;
 
   p {
     font-size: 21px;
@@ -28,7 +34,7 @@ export const ProductsContainer = styled.div`
   grid-template-columns: repeat(4, 1fr);
   justify-items: start;
   margin-top: 5px;
-  grid-row-gap: 20px;
+  grid-row-gap: 30px;
 `
 
 export const IconContainer = styled.div`

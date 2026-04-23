@@ -7,7 +7,8 @@ import {
   Container,
   CategoryTitle,
   IconContainer,
-  ProductsContainer
+  ProductsContainer,
+  CategoriesContainerMax
 } from './details-category-styles'
 
 // UTILITZ
@@ -18,6 +19,7 @@ import { categoryConverter } from '../../converters/firestore.converts'
 
 // COMPONENTS
 import Loading from '../loading/loading-components'
+import ProductsItem from '../products-item/products-item-components'
 
 interface DetailsCategoryProps {
   categoryId: string
@@ -72,7 +74,13 @@ const DetailsCategory: FunctionComponent<DetailsCategoryProps> = ({
             Explorar <strong> {category?.displayName} </strong>
           </p>
         </CategoryTitle>
-        <ProductsContainer></ProductsContainer>
+        <CategoriesContainerMax>
+          <ProductsContainer>
+            {category?.products.map((productsItems) => (
+              <ProductsItem key={productsItems.id} items={productsItems} />
+            ))}
+          </ProductsContainer>
+        </CategoriesContainerMax>
       </Container>
     </>
   )
