@@ -10,9 +10,11 @@ import { userConverter } from './converters/firestore.converts'
 import HomePage from './pages/home/home-page'
 import LoginPage from './pages/login/login.page'
 import SignUpPage from './pages/sign-up/sign-up-page'
-import Loading from './components/loading/loading-components'
 import ExplorePage from './pages/explore /explore-page'
 import CategoryDetailsPage from './pages/category-details/category-details-page'
+
+// COMPONETS
+import Loading from './components/loading/loading-components'
 
 const App: FunctionComponent = () => {
   const [isInitialing, setIsInitialing] = useState(true)

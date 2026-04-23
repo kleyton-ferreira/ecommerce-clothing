@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals'
 // CONTEXT
 import UserContextProvider from './context/user-context'
 import CategoryContextProvider from './context/category-context'
-import CartContextProvider from './context/cart-context'
+import CartContextProvider from './context/cartContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(

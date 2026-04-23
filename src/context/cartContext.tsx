@@ -1,5 +1,5 @@
 import { FunctionComponent, createContext, useState } from 'react'
-import CartProduct from '../types/cart.types'
+import CartProduct from '../types/cart-types'
 
 interface ICartContext {
   isVisible: boolean
@@ -14,7 +14,7 @@ export const CartContext = createContext<ICartContext>({
 })
 
 interface CartContextProps {
-  children: React.ReactNode | string
+  children: string | React.ReactNode
 }
 
 const CartContextProvider: FunctionComponent<CartContextProps> = ({
