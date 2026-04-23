@@ -7,13 +7,16 @@ import reportWebVitals from './reportWebVitals'
 // CONTEXT
 import UserContextProvider from './context/user-context'
 import CategoryContextProvider from './context/category-context'
+import CartContextProvider from './context/cart-context'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <UserContextProvider>
       <CategoryContextProvider>
-        <App />
+        <CartContextProvider>
+          <App />
+        </CartContextProvider>
       </CategoryContextProvider>
     </UserContextProvider>
   </React.StrictMode>
