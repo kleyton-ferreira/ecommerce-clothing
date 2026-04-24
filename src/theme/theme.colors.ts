@@ -4,7 +4,8 @@ const Colors = {
         whithe: "#F8F9FA",
         dark: "#343A40",
         hover: "#788992",
-        maroon: "#800000"
+        maroon: "#800000",
+        hoverText: "#A9A9A9"
     },
     backgound: {
         dark: "#212529",
