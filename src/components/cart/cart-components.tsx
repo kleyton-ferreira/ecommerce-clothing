@@ -9,13 +9,16 @@ import {
   CartTotal
 } from './cart-styles'
 
+// COMPONENTS
+import CartItem from '../cart-item/cart-item-components'
+
 // UTILITZ
 import { CartContext } from '../../context/cartContext'
 import CustomButton from '../custom-button/custom-button.components'
 import { BsCartCheck } from 'react-icons/bs'
 
 const Cart: FunctionComponent = () => {
-  const { isVisible, toggleCart } = useContext(CartContext)
+  const { isVisible, toggleCart, products } = useContext(CartContext)
 
   return (
     <>
@@ -23,6 +26,11 @@ const Cart: FunctionComponent = () => {
         <CartEscapeArea onClick={toggleCart} />
         <CartContent>
           <CartTitle>Seu Carrinho</CartTitle>
+
+          {products.map((productsItems) => (
+            <CartItem key={productsItems.id} product={productsItems} />
+          ))}
+
           <CartTotal>Total: R$ 1476.00</CartTotal>
           <CustomButton startIcon={<BsCartCheck />}>
             Ir para o checkout
