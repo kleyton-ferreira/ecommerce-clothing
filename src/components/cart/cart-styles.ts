@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Colors from '../../theme/theme.colors'
 
 interface CartContainerPros {
-    isVisible: boolean
+  isVisible: boolean
 }
 
 export const CartContainer = styled.div<CartContainerPros>`

@@ -7,13 +7,15 @@ interface ICartContext {
   products: CartProduct[]
   toggleCart: () => void
   addProductToCart: (product: Product) => void
+  removeProductsFromCart: (productId: string) => void
 }
 
 export const CartContext = createContext<ICartContext>({
   isVisible: false,
   products: [],
   toggleCart: () => {},
-  addProductToCart: () => {}
+  addProductToCart: () => {},
+  removeProductsFromCart: () => {}
 })
 
 interface CartContextProps {
@@ -30,26 +32,43 @@ const CartContextProvider: FunctionComponent<CartContextProps> = ({
     setIsVisible((prevState) => !prevState)
   }
 
-  const addProductToCart = (product: Product) => {
-    const productIsAlreadyIncart = products.some(
-      (item) => item.id === product.id
-    )
+  // ESSA FUNÇAO AQUI E A FUNÇAO DE ADICIONAR PRODUTOS NO CARRINHO!
 
-    if (productIsAlreadyIncart) {
-      return setProducts((prevProducts) =>
-        prevProducts.map((itemsProdu) =>
-          itemsProdu.id === product.id
-            ? { ...itemsProdu, quantity: itemsProdu.quantity + 1 }
-            : itemsProdu
-        )
+  const addProductToCart = (product: Product) => {
+    setProducts((prevState) => {
+      // ✅ Lê o estado atualizado dentro do setter
+      const productIsAlreadyInCart = prevState.some(
+        (item) => item.id === product.id
       )
-    }
-    setProducts((prevState) => [...prevState, { ...product, quantity: 1 }])
+
+      if (productIsAlreadyInCart) {
+        return prevState.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      }
+
+      return [...prevState, { ...product, quantity: 1 }]
+    })
+  }
+
+  // FUNÇAO DE REMOVER PRODUTOS DO CARRINHO!
+  const removeProductsFromCart = (productId: string) => {
+    setProducts((productsRemove) =>
+      productsRemove.filter((remove) => remove.id !== productId)
+    )
   }
 
   return (
     <CartContext.Provider
-      value={{ isVisible, products, toggleCart, addProductToCart }}
+      value={{
+        isVisible,
+        products,
+        toggleCart,
+        addProductToCart,
+        removeProductsFromCart
+      }}
     >
       {children}
     </CartContext.Provider>
