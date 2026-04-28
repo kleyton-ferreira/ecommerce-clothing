@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Colors from '../../theme/theme.colors'
 
 export const LoadingContainer = styled.div`
   position: fixed;
@@ -8,7 +9,18 @@ export const LoadingContainer = styled.div`
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
+  flex-direction: column ;
   align-items: center;
   justify-content: center;
   z-index: 10000;
+
+   p {
+    color: ${Colors.text.whithe};
+    font-weight: 300;
+    margin-bottom: 30px;
+    font-size: 1.7rem;
+    max-width: 36%;
+    display: inline-block;
+    text-align: center;
+  }
 `
