@@ -5,6 +5,7 @@ import Product from '../types/products.types'
 interface ICartContext {
   isVisible: boolean
   productsTotalPrice: number
+  productsCount: number
   products: CartProduct[]
   toggleCart: () => void
   addProductToCart: (product: Product) => void
@@ -16,6 +17,7 @@ interface ICartContext {
 export const CartContext = createContext<ICartContext>({
   isVisible: false,
   productsTotalPrice: 0,
+  productsCount: 0,
   products: [],
   toggleCart: () => {},
   addProductToCart: () => {},
@@ -95,6 +97,14 @@ const CartContextProvider: FunctionComponent<CartContextProps> = ({
   }
 
   // FUNÇAO VALOR TOTAL DOS PRODUTOS ADICIONADO NO CARRINHO!
+  const productsCount = useMemo(() => {
+    return products.reduce(
+      (acc, currentProduct) => acc + currentProduct.quantity,
+      0
+    )
+  }, [products])
+
+  // FUNÇAO VALOR TOTAL DOS PRODUTOS MOSTRADO NO ICONE DO CARRINHO!
   const productsTotalPrice = useMemo(() => {
     return products.reduce(
       (acc, currentProduct) =>
@@ -109,6 +119,7 @@ const CartContextProvider: FunctionComponent<CartContextProps> = ({
         isVisible,
         products,
         productsTotalPrice,
+        productsCount,
         toggleCart,
         addProductToCart,
         removeProductsFromCart,
