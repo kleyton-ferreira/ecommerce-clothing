@@ -8,6 +8,8 @@ interface ICartContext {
   toggleCart: () => void
   addProductToCart: (product: Product) => void
   removeProductsFromCart: (productId: string) => void
+  increaseProductQuantity: (productId: string) => void
+  decreaseProductQuantity: (productId: string) => void
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -15,7 +17,9 @@ export const CartContext = createContext<ICartContext>({
   products: [],
   toggleCart: () => {},
   addProductToCart: () => {},
-  removeProductsFromCart: () => {}
+  removeProductsFromCart: () => {},
+  increaseProductQuantity: () => {},
+  decreaseProductQuantity: () => {}
 })
 
 interface CartContextProps {
@@ -33,19 +37,15 @@ const CartContextProvider: FunctionComponent<CartContextProps> = ({
   }
 
   // ESSA FUNÇAO AQUI E A FUNÇAO DE ADICIONAR PRODUTOS NO CARRINHO!
-
   const addProductToCart = (product: Product) => {
     setProducts((prevState) => {
-      // ✅ Lê o estado atualizado dentro do setter
       const productIsAlreadyInCart = prevState.some(
         (item) => item.id === product.id
       )
 
       if (productIsAlreadyInCart) {
         return prevState.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+          item.id === product.id ? { ...item, quantity: item.quantity } : item
         )
       }
 
@@ -60,6 +60,40 @@ const CartContextProvider: FunctionComponent<CartContextProps> = ({
     )
   }
 
+  // FUNÇAO DE INCREMENTAR PRODUTOS!
+  const increaseProductQuantity = (productId: string) => {
+    if (!productId) return
+    setProducts((prevProducts) => {
+      const productExists = prevProducts.some((p) => p.id === productId)
+      if (!productExists) return prevProducts
+
+      return prevProducts.map((product) =>
+        product.id === productId
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      )
+    })
+  }
+
+  // FUNÇAO DE DECREMENTAR PRODUTOS!
+  const decreaseProductQuantity = (productId: string) => {
+    if (!productId) return
+    setProducts((prevProducts) => {
+      const productExists = prevProducts.some((p) => p.id === productId)
+      if (!productExists) return prevProducts
+
+      return prevProducts
+        .map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        )
+        .filter((product) => product.quantity > 0)
+    })
+  }
+
+  // FUNÇAO DE DECREMENTAR PRODUTOS!
+
   return (
     <CartContext.Provider
       value={{
@@ -67,7 +101,9 @@ const CartContextProvider: FunctionComponent<CartContextProps> = ({
         products,
         toggleCart,
         addProductToCart,
-        removeProductsFromCart
+        removeProductsFromCart,
+        increaseProductQuantity,
+        decreaseProductQuantity
       }}
     >
       {children}
