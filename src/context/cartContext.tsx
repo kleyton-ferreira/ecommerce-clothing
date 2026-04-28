@@ -1,9 +1,10 @@
-import { FunctionComponent, createContext, useState } from 'react'
+import { FunctionComponent, createContext, useMemo, useState } from 'react'
 import CartProduct from '../types/cart-types'
 import Product from '../types/products.types'
 
 interface ICartContext {
   isVisible: boolean
+  productsTotalPrice: number
   products: CartProduct[]
   toggleCart: () => void
   addProductToCart: (product: Product) => void
@@ -14,6 +15,7 @@ interface ICartContext {
 
 export const CartContext = createContext<ICartContext>({
   isVisible: false,
+  productsTotalPrice: 0,
   products: [],
   toggleCart: () => {},
   addProductToCart: () => {},
@@ -92,13 +94,21 @@ const CartContextProvider: FunctionComponent<CartContextProps> = ({
     })
   }
 
-  // FUNÇAO DE DECREMENTAR PRODUTOS!
+  // FUNÇAO VALOR TOTAL DOS PRODUTOS ADICIONADO NO CARRINHO!
+  const productsTotalPrice = useMemo(() => {
+    return products.reduce(
+      (acc, currentProduct) =>
+        acc + currentProduct.price * currentProduct.quantity,
+      0
+    )
+  }, [products])
 
   return (
     <CartContext.Provider
       value={{
         isVisible,
         products,
+        productsTotalPrice,
         toggleCart,
         addProductToCart,
         removeProductsFromCart,
