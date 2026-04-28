@@ -18,7 +18,7 @@ import CustomButton from '../custom-button/custom-button.components'
 import { BsCartCheck } from 'react-icons/bs'
 
 const Cart: FunctionComponent = () => {
-  const { isVisible, toggleCart, products, productsTotalPrice } =
+  const { isVisible, toggleCart, products, productsTotalPrice, productsCount } =
     useContext(CartContext)
 
   return (
@@ -32,10 +32,17 @@ const Cart: FunctionComponent = () => {
             <CartItem key={productsItems.id} product={productsItems} />
           ))}
 
-          <CartTotal>Total: R$ {productsTotalPrice} </CartTotal>
-          <CustomButton startIcon={<BsCartCheck />}>
-            Ir para o checkout
-          </CustomButton>
+          {productsCount > 0 && (
+            <CartTotal> Total: R${productsTotalPrice} </CartTotal>
+          )}
+
+          {productsCount > 0 && (
+            <CustomButton startIcon={<BsCartCheck />}>
+              Ir para o checkout
+            </CustomButton>
+          )}
+
+          {productsCount === 0 && <p> Seu carrinho está vazio! </p>}
         </CartContent>
       </CartContainer>
     </>
